@@ -83,7 +83,8 @@
   .radar-wrap svg{width:100%;height:auto;display:block;}
   .focus-box{background:var(--tint2);border-radius:14px;padding:16px 18px;margin:0 0 20px;}
   .focus-box .h{font-weight:700;color:var(--azul-oscuro);font-size:15px;margin-bottom:8px;}
-  .focus-box .item{font-family:"Lora",serif;font-size:18px;color:var(--azul-oscuro);font-weight:600;}
+  .focus-box .item{font-family:"Lora",serif;font-size:16px;color:var(--azul-oscuro);font-weight:600;line-height:1.5;margin:0 0 12px;}
+  .focus-box .item:last-child{margin-bottom:0;}
   .footnote{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--azul-medio);}
   @media (max-width:640px){
     .wrap{padding:18px 18px 48px;}
@@ -116,7 +117,7 @@
 <script>
 /* ====== CONFIGURACIÓN ====== */
 /* URL de Apps Script que manda los mails de resultado (reemplaza a Splitforms) */
-const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzsWweJNGCc3VUoaBHt_yUe7GFXrdZPxYpu4stmnJO8vuk-5RDjBRqa-N-xfIfCdLq3hw/exec";
+const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwf0sqFNmoiq74AvakHn2ZeOS01MNCssvczQcImqM2ez9sg5bacI1hAoASmLY_Jlk6ffQ/exec";
 /* URL de Apps Script SOLO para escribir la fila en la planilla (NO manda mail). Dejalo vacío "" si no lo usás */
 const SHEETS_ENDPOINT = "";
 const WHATSAPP = "https://wa.me/message/OY2XJPLGZKXMJ1";
@@ -134,7 +135,7 @@ const DIMENSIONS=[
   questions:["¿Las personas dicen abiertamente lo que piensan cuando no están de acuerdo, aunque incomode?","¿Las personas se dan feedback entre ellas sin esperar a una instancia formal o a que lo pida alguien de arriba?","¿Cuando alguien reconoce un error o pide ayuda, el equipo lo toma con naturalidad y lo usa para mejorar, en lugar de señalarlo?","¿En las conversaciones y decisiones participan todos, y no solo las mismas dos o tres voces de siempre?"]},
  {key:"D3",title:"Autonomía",short:"Autonomía",
   intro:"Un equipo que depende del jefe para cada decisión avanza a la velocidad del jefe. La madurez se ve cuando puede decidir, resolver y hacerse cargo por su cuenta.",
-  questions:["¿Está claro para el equipo qué decisiones puede tomar por su cuenta y cuáles necesitan aprobación de afuera?","¿El equipo resuelve la mayoría de las decisiones y los problemas de su trabajo sin tener que escalarlos hacia arriba?","¿Las personas se piden cuentas entre sí por los compromisos y resultados del equipo, y no solo cada una por su propia tarea?","¿El equipo se reorganiza solo y las personas asumen responsabilidades fuera de su rol cuando la situación lo pide, sin esperar que alguien lo ordene?"]},
+  questions:["¿Está claro para el equipo qué decisiones puede tomar por su cuenta y cuáles necesitan aprobación de afuera?","¿El equipo resuelve la mayoría de las decisiones y los problemas de su trabajo sin tener que escalarlos hacia arriba?","¿Cuando alguien del equipo no cumple con lo que se había comprometido, el resto se lo dice directamente, sin esperar a que lo haga el jefe?","¿El equipo se reorganiza solo y las personas asumen responsabilidades fuera de su rol cuando la situación lo pide, sin esperar que alguien lo ordene?"]},
  {key:"D4",title:"Adaptación",short:"Adaptabilidad",
   intro:"El ritmo del cambio no baja. Lo que separa a un equipo que apenas sobrevive de uno que se potencia es qué tan rápido aprende y ajusta su forma de trabajar.",
   questions:["¿El equipo tiene una forma de trabajo compartida que le permite ver y coordinar en qué está cada uno?","¿El equipo recibe con regularidad feedback de clientes o usuarios, y no trabaja a ciegas?","¿Antes de una apuesta grande, el equipo prueba en chico para validar, en lugar de jugarse todo de una?","¿El equipo cambia su forma de trabajar cuando algo deja de funcionar, en lugar de seguir por costumbre?"]},
@@ -143,7 +144,7 @@ const DIMENSIONS=[
   questions:["¿El equipo mide su éxito por los resultados que genera, y no por la cantidad de tareas que completa?","¿El equipo usa información real de clientes o usuarios para saber si lo que hace genera valor?","¿El equipo sostiene su ritmo sin depender de horas extra ni de esfuerzos heroicos constantes?","¿El equipo revisa su carga de trabajo para anticipar la sobrecarga antes de que explote?"]},
  {key:"D6",title:"Liderazgo",short:"Liderazgo",
   intro:"El liderazgo marca el techo de una organización. Cuando las decisiones se traban arriba o todo depende de pocas personas, el crecimiento se frena, sin importar el tamaño.",
-  questions:["¿Quienes conducen deciden a tiempo y con claridad, o las cosas se frenan esperando definiciones de arriba?","¿Cuando una persona clave no está, su área sigue funcionando bien sin ella?","¿Quienes conducen equipos dedican tiempo real a que su gente crezca, y no solo a que cumpla la tarea?","¿La organización forma nuevos líderes, o todo sigue dependiendo siempre de las mismas pocas personas?"]}
+  questions:["¿Las decisiones importantes se toman a tiempo, sin quedar esperando que alguien de arriba las apruebe?","¿Cuando una persona clave no está, su área sigue funcionando bien sin ella?","¿Quienes conducen equipos dedican tiempo real a que su gente crezca, y no solo a que cumpla la tarea?","¿La organización forma nuevos líderes, o todo sigue dependiendo siempre de las mismas pocas personas?"]}
 ];
 const GENERAL={
  1:"Hoy tu empresa se sostiene sobre pocas personas. El resultado muestra que esa dinámica está condicionando su crecimiento, pero también que es posible intervenir sobre ella.",
@@ -151,6 +152,14 @@ const GENERAL={
  3:"Tu empresa tiene bases sólidas y el resultado muestra que está preparada para dar un nuevo paso en su crecimiento. El próximo avance depende de potenciar aquello que hoy puede generar un mayor impacto.",
  4:"Tu empresa ya juega en un nivel que pocas alcanzan. El resultado muestra cuál es el aspecto que puede llevarla de muy buena a extraordinaria.",
  5:"Tu empresa está entre las que mejor funcionan. El resultado muestra cuál es la próxima frontera que puede impulsar su evolución."
+};
+const OPORTUNIDAD_GENERAL={
+ "Rumbo":"Tu empresa podría estar creciendo sin una dirección compartida real, con cada área avanzando a su manera.",
+ "Confianza":"Es posible que tu equipo esté evitando las conversaciones que más impactan, y que vos no te estés enterando.",
+ "Autonomía":"Puede que tu equipo dependa más de vos de lo que te conviene, y eso tiene un techo de crecimiento.",
+ "Adaptación":"Tu empresa podría estar respondiendo tarde a los cambios del mercado, sin que se note todavía.",
+ "Impacto":"Es posible que tu equipo esté ocupado todo el tiempo, sin que eso se traduzca en el resultado que creés.",
+ "Liderazgo":"El crecimiento de tu empresa podría estar limitado por cuántas personas pueden liderar hoy, no por cuánto negocio hay."
 };
 const state={step:0,contact:{},answers:{},results:null};
 const TOTAL=DIMENSIONS.length;
@@ -252,7 +261,9 @@ function computeResults(){
     const avg=vals.reduce((a,b)=>a+b,0)/vals.length;const lvl=levelFromAvg(avg);
     return {title:dim.title,short:dim.short,values:vals,avg:+avg.toFixed(2),level:lvl.n,levelName:lvl.name};});
   const gAvg=perDim.reduce((a,d)=>a+d.avg,0)/perDim.length;const gLvl=levelFromAvg(gAvg);
-  const mejorar=[...perDim].sort((a,b)=>a.avg-b.avg).slice(0,2);
+  const UMBRAL_OPORTUNIDAD=3.5;
+  let mejorar=perDim.filter(d=>d.avg<UMBRAL_OPORTUNIDAD).sort((a,b)=>a.avg-b.avg);
+  if(mejorar.length===0){mejorar=[[...perDim].sort((a,b)=>a.avg-b.avg)[0]];}
   return {perDim,globalAvg:+gAvg.toFixed(2),globalLevel:gLvl.n,globalLevelName:gLvl.name,mejorar};
 }
 // Escribe una fila en Google Sheets (Apps Script). NO manda mail.
@@ -330,8 +341,7 @@ function renderPreliminar(){
       <div class="radar-wrap">${radarSVG(r.perDim)}</div>
       <div class="focus-box">
         <div class="h">Dónde está tu mayor oportunidad</div>
-        <div class="item">${r.mejorar[0].title}</div>
-        <div class="item">${r.mejorar[1].title}</div>
+        ${r.mejorar.map(d=>`<div class="item">${OPORTUNIDAD_GENERAL[d.title]}</div>`).join('')}
       </div>
       <p class="lead">${GENERAL[r.globalLevel]}</p>
       <p>Este resultado es una foto del estado actual de tu empresa. La devolución completa, con un análisis profundo de lo que revela tu radar, te la damos en una charla directa con nosotros. Si la querés tener antes, escribinos ahora por WhatsApp y la coordinamos. Si no, en las próximas 72 horas nos vamos a estar contactando con vos.</p>
