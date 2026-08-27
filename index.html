@@ -55,6 +55,7 @@
   .actions .right{margin-left:auto;}
   .btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;}
   .field{margin-bottom:18px;}
+  .fieldhint{font-size:13px;color:var(--azul-medio);margin-top:5px;}
   label.lbl{display:block;font-size:14.5px;font-weight:700;margin-bottom:6px;color:var(--azul-oscuro);}
   input[type=text],input[type=email],input[type=tel],input[type=number],select{
     width:100%;font-family:inherit;font-size:16.5px;color:var(--azul-oscuro);background:var(--blanco);
@@ -82,7 +83,7 @@
   .radar-wrap{background:var(--tint);border:1px solid var(--line);border-radius:var(--radius);padding:10px 6px 4px;margin:6px 0 22px;}
   .radar-wrap svg{width:100%;height:auto;display:block;}
   .focus-box{background:var(--tint2);border-radius:14px;padding:16px 18px;margin:0 0 20px;}
-  .focus-box .h{font-weight:700;color:var(--azul-oscuro);font-size:15px;margin-bottom:8px;}
+  .focus-box .h{font-weight:700;color:var(--azul-oscuro);font-size:17px;margin-bottom:8px;}
   .focus-box .item{font-family:"Lora",serif;font-size:16px;color:var(--azul-oscuro);font-weight:600;line-height:1.5;margin:0 0 12px;}
   .focus-box .item:last-child{margin-bottom:0;}
   .footnote{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--azul-medio);}
@@ -117,7 +118,7 @@
 <script>
 /* ====== CONFIGURACIÓN ====== */
 /* URL de Apps Script que manda los mails de resultado (reemplaza a Splitforms) */
-const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwf0sqFNmoiq74AvakHn2ZeOS01MNCssvczQcImqM2ez9sg5bacI1hAoASmLY_Jlk6ffQ/exec";
+const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxApW7vGioVvFFSHUvAq0625kSGQEbTMRGJjCLmelTDn5hDYNELY1rAhDK0sGbjwaRABQ/exec";
 /* URL de Apps Script SOLO para escribir la fila en la planilla (NO manda mail). Dejalo vacío "" si no lo usás */
 const SHEETS_ENDPOINT = "";
 const WHATSAPP = "https://wa.me/message/OY2XJPLGZKXMJ1";
@@ -135,7 +136,7 @@ const DIMENSIONS=[
   questions:["¿Las personas dicen abiertamente lo que piensan cuando no están de acuerdo, aunque incomode?","¿Las personas se dan feedback entre ellas sin esperar a una instancia formal o a que lo pida alguien de arriba?","¿Cuando alguien reconoce un error o pide ayuda, el equipo lo toma con naturalidad y lo usa para mejorar, en lugar de señalarlo?","¿En las conversaciones y decisiones participan todos, y no solo las mismas dos o tres voces de siempre?"]},
  {key:"D3",title:"Autonomía",short:"Autonomía",
   intro:"Un equipo que depende del jefe para cada decisión avanza a la velocidad del jefe. La madurez se ve cuando puede decidir, resolver y hacerse cargo por su cuenta.",
-  questions:["¿Está claro para el equipo qué decisiones puede tomar por su cuenta y cuáles necesitan aprobación de afuera?","¿El equipo resuelve la mayoría de las decisiones y los problemas de su trabajo sin tener que escalarlos hacia arriba?","¿Cuando alguien del equipo no cumple con lo que se había comprometido, el resto se lo dice directamente, sin esperar a que lo haga el jefe?","¿El equipo se reorganiza solo y las personas asumen responsabilidades fuera de su rol cuando la situación lo pide, sin esperar que alguien lo ordene?"]},
+  questions:["¿Está claro para el equipo qué decisiones puede tomar por su cuenta y cuáles necesitan aprobación de afuera?","¿El equipo resuelve la mayoría de las decisiones y los problemas de su trabajo sin tener que escalarlos hacia arriba?","¿Las personas se piden cuentas entre sí por los compromisos y resultados del equipo, y no solo cada una por su propia tarea?","¿El equipo se reorganiza solo y las personas asumen responsabilidades fuera de su rol cuando la situación lo pide, sin esperar que alguien lo ordene?"]},
  {key:"D4",title:"Adaptación",short:"Adaptabilidad",
   intro:"El ritmo del cambio no baja. Lo que separa a un equipo que apenas sobrevive de uno que se potencia es qué tan rápido aprende y ajusta su forma de trabajar.",
   questions:["¿El equipo tiene una forma de trabajo compartida que le permite ver y coordinar en qué está cada uno?","¿El equipo recibe con regularidad feedback de clientes o usuarios, y no trabaja a ciegas?","¿Antes de una apuesta grande, el equipo prueba en chico para validar, en lugar de jugarse todo de una?","¿El equipo cambia su forma de trabajar cuando algo deja de funcionar, en lugar de seguir por costumbre?"]},
@@ -144,7 +145,7 @@ const DIMENSIONS=[
   questions:["¿El equipo mide su éxito por los resultados que genera, y no por la cantidad de tareas que completa?","¿El equipo usa información real de clientes o usuarios para saber si lo que hace genera valor?","¿El equipo sostiene su ritmo sin depender de horas extra ni de esfuerzos heroicos constantes?","¿El equipo revisa su carga de trabajo para anticipar la sobrecarga antes de que explote?"]},
  {key:"D6",title:"Liderazgo",short:"Liderazgo",
   intro:"El liderazgo marca el techo de una organización. Cuando las decisiones se traban arriba o todo depende de pocas personas, el crecimiento se frena, sin importar el tamaño.",
-  questions:["¿Las decisiones importantes se toman a tiempo, sin quedar esperando que alguien de arriba las apruebe?","¿Cuando una persona clave no está, su área sigue funcionando bien sin ella?","¿Quienes conducen equipos dedican tiempo real a que su gente crezca, y no solo a que cumpla la tarea?","¿La organización forma nuevos líderes, o todo sigue dependiendo siempre de las mismas pocas personas?"]}
+  questions:["¿Quienes conducen deciden a tiempo y con claridad, o las cosas se frenan esperando definiciones de arriba?","¿Cuando una persona clave no está, su área sigue funcionando bien sin ella?","¿Quienes conducen equipos dedican tiempo real a que su gente crezca, y no solo a que cumpla la tarea?","¿La organización forma nuevos líderes, o todo sigue dependiendo siempre de las mismas pocas personas?"]}
 ];
 const GENERAL={
  1:"Hoy tu empresa se sostiene sobre pocas personas. El resultado muestra que esa dinámica está condicionando su crecimiento, pero también que es posible intervenir sobre ella.",
@@ -198,27 +199,73 @@ function renderDatos(){
     <div class="step">
       <h2>Contanos de tu empresa</h2>
       <p class="dim-intro">Con esto preparamos una devolución a tu medida.</p>
-      <div class="field"><label class="lbl" for="f_nombre">Nombre y apellido</label><input type="text" id="f_nombre" autocomplete="name" value="${c.nombre||''}"></div>
-      <div class="field"><label class="lbl" for="f_rol">Rol o cargo</label><input type="text" id="f_rol" value="${c.rol||''}"></div>
       <div class="field"><label class="lbl" for="f_empresa">Empresa</label><input type="text" id="f_empresa" autocomplete="organization" value="${c.empresa||''}"></div>
-      <div class="field"><label class="lbl" for="f_personas">Cantidad de personas en la empresa</label><input type="number" id="f_personas" min="1" inputmode="numeric" value="${c.personas||''}"></div>
       <div class="field"><label class="lbl" for="f_fact">Facturación anual aproximada</label>
         <select id="f_fact"><option value="">Elegí una opción</option><option>Menos de USD 100.000</option><option>USD 100.000 a 500.000</option><option>USD 500.000 a 1.000.000</option><option>USD 1.000.000 a 5.000.000</option><option>Más de USD 5.000.000</option></select></div>
-      <div class="field"><label class="lbl" for="f_email">Email</label><input type="email" id="f_email" autocomplete="email" value="${c.email||''}"></div>
-      <div class="field"><label class="lbl" for="f_wpp">WhatsApp (código de área + celular)</label><input type="tel" id="f_wpp" autocomplete="tel" placeholder="Ej. 11 2345 6789" value="${c.wpp||''}"></div>
+      <div class="field"><label class="lbl" for="f_email">Email</label><input type="email" id="f_email" autocomplete="email" value="${c.email||''}"><div class="fieldhint">Poné el mismo mail que usaste en la inscripción.</div></div>
+      <div class="field"><label class="lbl" for="f_rubro">Rubro de la empresa</label>
+        <select id="f_rubro"><option value="">Elegí una opción</option><option>Tecnología</option><option>Servicios profesionales</option><option>Industria y manufactura</option><option>Retail y consumo</option><option>Salud</option><option>Finanzas y seguros</option><option>Construcción e inmobiliario</option><option>Educación</option><option>Logística y transporte</option><option>Otro</option></select></div>
+      <div class="field"><label class="lbl" for="f_desafio">¿Cuál dirías que es hoy tu principal desafío de crecimiento? (opcional)</label><input type="text" id="f_desafio" placeholder="Por ejemplo, retener talento, escalar sin perder calidad, ordenar el liderazgo medio" value="${c.desafio||''}"></div>
+      <div class="field"><label class="lbl" for="f_intento">¿Ya intentaste resolver esto antes?</label>
+        <select id="f_intento"><option value="">Elegí una opción</option><option>No, es la primera vez</option><option>Sí, con formación o consultoría</option><option>Sí, pero lo armamos puertas adentro</option></select></div>
+      <div class="err" id="noEncontradoBox" style="display:none;">
+        Ese mail no coincide con ninguna inscripción.
+        <div style="margin-top:8px;"><button type="button" class="btn-ghost" id="btnRevisarMail">Revisar el mail</button> <button type="button" class="btn-ghost" id="btnNoMeInscribi">No completé la inscripción antes</button></div>
+      </div>
+      <div id="registroExtra" style="display:none;">
+        <div class="field"><label class="lbl" for="f_nombre_extra">Nombre y apellido</label><input type="text" id="f_nombre_extra" value="${c.nombre||''}"></div>
+        <div class="field"><label class="lbl" for="f_wpp_extra">WhatsApp (código de área + celular)</label><input type="tel" id="f_wpp_extra" placeholder="Ej. 11 2345 6789" value="${c.wpp||''}"></div>
+      </div>
+      <div class="err" id="errorConexionBox" style="display:none;">
+        No pudimos verificar tu mail en este momento. Escribinos por WhatsApp y seguimos desde ahí.
+        <div style="margin-top:8px;"><a class="btn-outline" href="${WHATSAPP}" target="_blank" rel="noopener">Contactar por WhatsApp</a></div>
+      </div>
       <div class="err" id="datosErr"></div>
       <div class="actions"><button class="btn-ghost" id="back">Volver</button><button class="btn right" id="next">Continuar</button></div>
     </div>`;
   if(c.fact)document.getElementById('f_fact').value=c.fact;
+  if(c.rubro)document.getElementById('f_rubro').value=c.rubro;
+  if(c.intento)document.getElementById('f_intento').value=c.intento;
+  let registroForzado=false;
   document.getElementById('back').onclick=()=>{state.step=0;render();};
-  document.getElementById('next').onclick=()=>{
+  document.getElementById('btnRevisarMail').onclick=()=>{
+    document.getElementById('noEncontradoBox').style.display='none';
+    document.getElementById('f_email').focus();
+  };
+  document.getElementById('btnNoMeInscribi').onclick=()=>{
+    registroForzado=true;
+    document.getElementById('registroExtra').style.display='block';
+    document.getElementById('noEncontradoBox').style.display='none';
+  };
+  document.getElementById('next').onclick=async ()=>{
     const g=id=>document.getElementById(id).value.trim();
-    const d={nombre:g('f_nombre'),rol:g('f_rol'),empresa:g('f_empresa'),personas:g('f_personas'),fact:document.getElementById('f_fact').value,email:g('f_email'),wpp:g('f_wpp')};
+    const d={empresa:g('f_empresa'),fact:document.getElementById('f_fact').value,email:g('f_email'),rubro:document.getElementById('f_rubro').value,desafio:g('f_desafio'),intento:document.getElementById('f_intento').value};
     const err=document.getElementById('datosErr');
-    if(!d.nombre||!d.rol||!d.empresa||!d.personas||!d.fact||!d.email||!d.wpp){err.textContent="Completá todos los campos para continuar.";return;}
+    document.getElementById('noEncontradoBox').style.display='none';
+    document.getElementById('errorConexionBox').style.display='none';
+    err.textContent="";
+    if(!d.empresa||!d.fact||!d.email||!d.rubro||!d.intento){err.textContent="Completá todos los campos para continuar.";return;}
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){err.textContent="Revisá el email, parece incompleto.";return;}
-    if((d.wpp.match(/\d/g)||[]).length<10){err.textContent="Ingresá el WhatsApp con código de área y número de celular.";return;}
-    state.contact=d;enviarLead();state.step=2;render();
+    if(registroForzado){
+      d.nombre=g('f_nombre_extra');d.wpp=g('f_wpp_extra');
+      if(!d.nombre||!d.wpp){err.textContent="Completá nombre y WhatsApp para continuar.";return;}
+      state.contact=d;enviarLead();state.step=2;render();return;
+    }
+    const btn=document.getElementById('next');const txtOriginal=btn.textContent;
+    btn.disabled=true;btn.textContent="Verificando...";
+    try{
+      const resp=await fetch(RESULTS_ENDPOINT,{method:"POST",body:JSON.stringify({tipo:"Verificar email",email:d.email})});
+      const json=await resp.json();
+      btn.disabled=false;btn.textContent=txtOriginal;
+      if(json.encontrado){
+        state.contact=d;enviarLead();state.step=2;render();
+      }else{
+        document.getElementById('noEncontradoBox').style.display='block';
+      }
+    }catch(ex){
+      btn.disabled=false;btn.textContent=txtOriginal;
+      document.getElementById('errorConexionBox').style.display='block';
+    }
   };
 }
 function renderBienvenida(){
@@ -274,15 +321,17 @@ function enviarASheets(p){
 // PASO 1: al completar los datos de la empresa -> solo Google Sheets
 function enviarLead(){
   const c=state.contact;
-  const p={_version:VERSION,_fecha:new Date().toLocaleString('es-AR'),tipo:"Datos de empresa",nombre:c.nombre,rol:c.rol,empresa:c.empresa,personas:c.personas,facturacion:c.fact,email:c.email,whatsapp:c.wpp};
+  const p={_version:VERSION,_fecha:new Date().toLocaleString('es-AR'),tipo:"Datos de empresa",empresa:c.empresa,facturacion:c.fact,email:c.email,rubro:c.rubro,desafio:c.desafio,intento:c.intento};
   enviarASheets(p);
 }
 function buildPayload(r){
   const c=state.contact;
-  const p={_version:VERSION,_fecha:new Date().toLocaleString('es-AR'),tipo:"Diagnóstico completo",nombre:c.nombre,rol:c.rol,empresa:c.empresa,personas:c.personas,facturacion:c.fact,email:c.email,whatsapp:c.wpp,
+  const p={_version:VERSION,_fecha:new Date().toLocaleString('es-AR'),tipo:"Diagnóstico completo",empresa:c.empresa,facturacion:c.fact,email:c.email,rubro:c.rubro,desafio:c.desafio,intento:c.intento,
     ESTADIO_GLOBAL:`Nivel ${r.globalLevel} - ${r.globalLevelName} (promedio ${r.globalAvg})`,
     PUNTOS_A_MEJORAR:r.mejorar.map(d=>`${d.title} (Nivel ${d.level} - ${d.levelName})`).join(" | "),
     _devolucionPreliminar:GENERAL[r.globalLevel]};
+  if(c.nombre){p.nombre=c.nombre;}
+  if(c.wpp){p.whatsapp=c.wpp;}
   r.perDim.forEach(d=>{p[d.title]=`Nivel ${d.level} - ${d.levelName} (prom ${d.avg}) | respuestas: ${d.values.join(", ")}`;});
   return p;
 }
