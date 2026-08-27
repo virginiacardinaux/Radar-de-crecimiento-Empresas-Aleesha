@@ -118,7 +118,7 @@
 <script>
 /* ====== CONFIGURACIÓN ====== */
 /* URL de Apps Script que manda los mails de resultado (reemplaza a Splitforms) */
-const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxApW7vGioVvFFSHUvAq0625kSGQEbTMRGJjCLmelTDn5hDYNELY1rAhDK0sGbjwaRABQ/exec";
+const RESULTS_ENDPOINT = "https://script.google.com/macros/s/AKfycbytJce_qGcGYLc8W42vIsydfieg71Gx61933s7nHnmdB9_CYH05dPmRlotwiy6mqIkTTw/exec";
 /* URL de Apps Script SOLO para escribir la fila en la planilla (NO manda mail). Dejalo vacío "" si no lo usás */
 const SHEETS_ENDPOINT = "";
 const WHATSAPP = "https://wa.me/message/OY2XJPLGZKXMJ1";
@@ -202,7 +202,7 @@ function renderDatos(){
       <div class="field"><label class="lbl" for="f_empresa">Empresa</label><input type="text" id="f_empresa" autocomplete="organization" value="${c.empresa||''}"></div>
       <div class="field"><label class="lbl" for="f_fact">Facturación anual aproximada</label>
         <select id="f_fact"><option value="">Elegí una opción</option><option>Menos de USD 100.000</option><option>USD 100.000 a 500.000</option><option>USD 500.000 a 1.000.000</option><option>USD 1.000.000 a 5.000.000</option><option>Más de USD 5.000.000</option></select></div>
-      <div class="field"><label class="lbl" for="f_email">Email</label><input type="email" id="f_email" autocomplete="email" value="${c.email||''}"><div class="fieldhint">Poné el mismo mail que usaste en la inscripción.</div></div>
+      <div class="field"><label class="lbl" for="f_email">Email</label><input type="email" id="f_email" autocomplete="email" value="${c.email||''}"><div class="fieldhint">Poné el mismo mail que usaste en la inscripción, ahí te vamos a enviar el resultado. ¿No te inscribiste antes? <a href="#" id="linkNoMeInscribi">No me inscribí</a></div></div>
       <div class="field"><label class="lbl" for="f_rubro">Rubro de la empresa</label>
         <select id="f_rubro"><option value="">Elegí una opción</option><option>Tecnología</option><option>Servicios profesionales</option><option>Industria y manufactura</option><option>Retail y consumo</option><option>Salud</option><option>Finanzas y seguros</option><option>Construcción e inmobiliario</option><option>Educación</option><option>Logística y transporte</option><option>Otro</option></select></div>
       <div class="field"><label class="lbl" for="f_desafio">¿Cuál dirías que es hoy tu principal desafío de crecimiento? (opcional)</label><input type="text" id="f_desafio" placeholder="Por ejemplo, retener talento, escalar sin perder calidad, ordenar el liderazgo medio" value="${c.desafio||''}"></div>
@@ -232,11 +232,13 @@ function renderDatos(){
     document.getElementById('noEncontradoBox').style.display='none';
     document.getElementById('f_email').focus();
   };
-  document.getElementById('btnNoMeInscribi').onclick=()=>{
+  const activarRegistroExtra=()=>{
     registroForzado=true;
     document.getElementById('registroExtra').style.display='block';
     document.getElementById('noEncontradoBox').style.display='none';
   };
+  document.getElementById('btnNoMeInscribi').onclick=activarRegistroExtra;
+  document.getElementById('linkNoMeInscribi').onclick=(ev)=>{ev.preventDefault();activarRegistroExtra();};
   document.getElementById('next').onclick=async ()=>{
     const g=id=>document.getElementById(id).value.trim();
     const d={empresa:g('f_empresa'),fact:document.getElementById('f_fact').value,email:g('f_email'),rubro:document.getElementById('f_rubro').value,desafio:g('f_desafio'),intento:document.getElementById('f_intento').value};
